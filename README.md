@@ -4,6 +4,10 @@
 
 A Model Context Protocol server for Hackle API providing tools and resources for querying A/B Test data.
 
+<a href="https://glama.ai/mcp/servers/@hackle-io/hackle-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@hackle-io/hackle-mcp/badge" alt="hackle-mcp MCP server" />
+</a>
+
 ## Features
 
 ### Tools
