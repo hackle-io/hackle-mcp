@@ -33,8 +33,14 @@ Add this entry to your claude_desktop_config.json:
   "mcpServers": {
     "hackle-mcp": {
       "command": "npx",
-      "args": ["-y", "@hackle-io/hackle-mcp"],
-      "env": "YOUR_API_KEY"
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@hackle-io/hackle-mcp",
+        "--config",
+        "{\"apiKey\":\"YOUR_API_KEY\"}"
+      ]
     }
   }
 }
