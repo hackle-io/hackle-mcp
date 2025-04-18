@@ -1,13 +1,30 @@
 {
-  "name": "hackle-mcp",
-  "version": "0.0.1",
+  "name": "@hackle-io/hackle-mcp",
+  "version": "0.0.2",
   "description": "Model Context Protocol server for Hackle",
+  "homepage": "https://www.hackle.io",
   "type": "module",
   "bin": {
-    "hackle-mcp": "./dist/index.js"
+    "hackle-mcp": "dist/index.js"
   },
   "files": [
     "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "analytics",
+    "experiment",
+    "abtest",
+    "feature-flag",
+    "remote-config",
+    "crm",
+    "customer-relationship-management"
   ],
   "scripts": {
     "build": "tsc && mcp-build",
