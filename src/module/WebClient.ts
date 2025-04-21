@@ -1,4 +1,4 @@
-const BASE_URL = "http://admin-api.hackle.io";
+const BASE_URL = "https://admin-api.hackle.io";
 const ENVIRONMENT_KEY = process.env.ENVIRONMENT_KEY || "production";
 const DEFAULT_HEADERS = {
   accept: "application/json",
