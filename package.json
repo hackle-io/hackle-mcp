@@ -1,6 +1,6 @@
 {
   "name": "@hackle-io/hackle-mcp",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Model Context Protocol server for Hackle",
   "homepage": "https://www.hackle.io",
   "type": "module",
