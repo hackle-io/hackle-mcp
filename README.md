@@ -12,7 +12,11 @@ A Model Context Protocol server for Hackle API providing tools and resources for
 
 ### Tools
 
-- list_experiments: List experiments(A/B Test) from your workspace
+- experiment-list: Fetches a paginated list of all A/B Test experiments from your Hackle workspace with optional search filtering
+- experiment-detail: Retrieves detailed information and results for a specific experiment (A/B Test)
+- active-user-series: Retrieves active user count data over time
+- retention-series: Retrieves user retention data aggregated by time units (day, week, month)
+- stickiness-series: Retrieves user stickiness metrics (frequency of return visits) by time units
 
 ## Installation
 

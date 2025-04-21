@@ -18,7 +18,7 @@ class StickinessSeriesTool extends MCPTool<StickinessSeriesInput> {
         "Specifies the time unit for metric data. Data can be aggregated on a daily (DAY), weekly (WEEK), or monthly (MONTH) basis.",
     },
     date: {
-      type: z.string().optional(),
+      type: z.string(),
       description: "The date in yyyy-mm-dd format to query to (inclusive)",
     },
   };

@@ -9,7 +9,7 @@ interface ExperimentListInput {
 }
 
 class ExperimentListTool extends MCPTool<ExperimentListInput> {
-  name = "fetch-experiment-list";
+  name = "experiment-list";
   description = "Fetches experiment(A/B Test) list";
 
   schema = {
@@ -24,7 +24,7 @@ class ExperimentListTool extends MCPTool<ExperimentListInput> {
       default: 100,
     },
     searchKeyword: {
-      type: z.string().optional(),
+      type: z.string(),
       description:
         "Parameter used to filter experiments by keyword. Allows searching for experiments containing the specified text. ",
     },
