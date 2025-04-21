@@ -18,7 +18,7 @@ class ActiveUserSeriesTool extends MCPTool<ActiveUserSeriesInput> {
         "Specifies the time unit for metric data. Data can be aggregated on a daily (DAY), weekly (WEEK), or monthly (MONTH) basis.",
     },
     date: {
-      type: z.string(),
+      type: z.string().optional(),
       description: "The date in yyyy-mm-dd format to query to (inclusive)",
     },
   };

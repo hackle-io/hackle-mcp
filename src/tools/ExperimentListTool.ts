@@ -24,7 +24,7 @@ class ExperimentListTool extends MCPTool<ExperimentListInput> {
       default: 100,
     },
     searchKeyword: {
-      type: z.string(),
+      type: z.string().optional(),
       description:
         "Parameter used to filter experiments by keyword. Allows searching for experiments containing the specified text. ",
     },

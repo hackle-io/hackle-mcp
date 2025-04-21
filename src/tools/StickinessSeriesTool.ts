@@ -13,17 +13,17 @@ class StickinessSeriesTool extends MCPTool<StickinessSeriesInput> {
 
   schema = {
     unit: {
-      type: z.enum(["DAY", "WEEK", "MONTH"]),
+      type: z.enum(["WEEK", "MONTH"]),
       description:
-        "Specifies the time unit for metric data. Data can be aggregated on a daily (DAY), weekly (WEEK), or monthly (MONTH) basis.",
+        "Specifies the time unit for metric data. Data can be aggregated on a weekly (WEEK) or monthly (MONTH) basis.",
     },
     date: {
-      type: z.string(),
+      type: z.string().optional(),
       description: "The date in yyyy-mm-dd format to query to (inclusive)",
     },
   };
 
-  async execute({ unit = "DAY", date }: StickinessSeriesInput) {
+  async execute({ unit = "WEEK", date }: StickinessSeriesInput) {
     return await WebClient.get(
       `/api/v1/workspaces/auto-metrics/stickiness-series?unit=${unit}&date=${date}`
     );
