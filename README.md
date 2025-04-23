@@ -17,6 +17,10 @@ A Model Context Protocol server for Hackle API providing tools and resources for
 - active-user-series: Retrieves active user count data over time
 - retention-series: Retrieves user retention data aggregated by time units (day, week, month)
 - stickiness-series: Retrieves user stickiness metrics (frequency of return visits) by time units
+- in-app-message-list: Fetches a paginated list of in-app-messages with optional search filtering
+- in-app-message-detail: Retrieves detailed information and results for a specific in-app-message
+- push-message-list: Fetches a paginated list of all push messages with optional search filtering
+- push-message-detail: Retrieves detailed information and results for a specific push message
 
 ## Installation
 
