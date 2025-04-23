@@ -15,13 +15,11 @@ class InAppMessageListTool extends MCPTool<InAppMessageListInput> {
   schema = {
     pageNumber: {
       type: z.number(),
-      description: "page number (min 0, default 0)",
-      default: 0,
+      description: "page number (min 0)",
     },
     pageSize: {
       type: z.number(),
-      description: "Number of items to display per page (min 1, default 100)",
-      default: 100,
+      description: "Number of items to display per page (min 1)",
     },
     searchKeyword: {
       type: z.string().optional(),
