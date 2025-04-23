@@ -2,15 +2,15 @@ import { MCPTool } from "mcp-framework";
 import { z } from "zod";
 import WebClient from "../module/WebClient.js";
 
-interface ExperimentListInput {
+interface PushMessageListInput {
   pageNumber?: number;
   pageSize?: number;
   searchKeyword?: string;
 }
 
-class ExperimentListTool extends MCPTool<ExperimentListInput> {
-  name = "experiment-list";
-  description = "Fetches experiment(A/B Test) list";
+class PushMessageListTool extends MCPTool<PushMessageListInput> {
+  name = "push-message-list";
+  description = "Fetches push message list";
 
   schema = {
     pageNumber: {
@@ -24,7 +24,7 @@ class ExperimentListTool extends MCPTool<ExperimentListInput> {
     searchKeyword: {
       type: z.string().optional(),
       description:
-        "Parameter used to filter experiments by keyword. Allows searching for experiments containing the specified text. ",
+        "Parameter used to filter push messages by keyword. Allows searching for push messages containing the specified text.",
     },
   };
 
@@ -32,11 +32,11 @@ class ExperimentListTool extends MCPTool<ExperimentListInput> {
     pageNumber = 0,
     pageSize = 100,
     searchKeyword = "",
-  }: ExperimentListInput) {
+  }: PushMessageListInput) {
     return await WebClient.get(
-      `/api/v1/experiments?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}`
+      `/api/v1/push-messages?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}`
     );
   }
 }
 
-export default ExperimentListTool;
+export default PushMessageListTool;
