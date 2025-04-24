@@ -17,7 +17,7 @@ A Model Context Protocol server for Hackle API providing tools and resources for
 - **Name**: `experiment-list`
 - **Description**: Fetches a paginated list of A/B test experiments with search functionality.
 - **Parameters**:
-  - `pageNumber`: Page number (default: 0)
+  - `pageNumber`: Page number (default: 1)
   - `pageSize`: Number of items per page (default: 100)
   - `searchKeyword`: Search keyword (optional)
 
@@ -33,7 +33,7 @@ A Model Context Protocol server for Hackle API providing tools and resources for
 - **Name**: `in-app-message-list`
 - **Description**: Fetches a paginated list of in-app messages with search functionality.
 - **Parameters**:
-  - `pageNumber`: Page number (default: 0)
+  - `pageNumber`: Page number (default: 1)
   - `pageSize`: Number of items per page (default: 100)
   - `searchKeyword`: Search keyword (optional)
 
@@ -49,7 +49,7 @@ A Model Context Protocol server for Hackle API providing tools and resources for
 - **Name**: `push-message-list`
 - **Description**: Fetches a paginated list of push messages with search functionality.
 - **Parameters**:
-  - `pageNumber`: Page number (default: 0)
+  - `pageNumber`: Page number (default: 1)
   - `pageSize`: Number of items per page (default: 100)
   - `searchKeyword`: Search keyword (optional)
 

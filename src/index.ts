@@ -7,7 +7,7 @@ import WebClient from './WebClient.js';
 
 const server = new McpServer({
   name: '@hackle-io/hackle-mcp',
-  version: '1.0.1',
+  version: '1.0.2',
 });
 
 // Experiment List Tool
@@ -15,11 +15,11 @@ server.tool(
   'experiment-list',
   'Fetches a paginated list of A/B test experiments with search functionality.',
   {
-    pageNumber: z.number(),
-    pageSize: z.number(),
+    pageNumber: z.number().default(1),
+    pageSize: z.number().default(100),
     searchKeyword: z.string().optional(),
   },
-  async ({ pageNumber = 0, pageSize = 100, searchKeyword = '' }) => {
+  async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
     return {
       content: [
         {
@@ -59,11 +59,11 @@ server.tool(
   'in-app-message-list',
   'Fetches a paginated list of in-app messages with search functionality.',
   {
-    pageNumber: z.number(),
-    pageSize: z.number(),
+    pageNumber: z.number().default(1),
+    pageSize: z.number().default(100),
     searchKeyword: z.string().optional(),
   },
-  async ({ pageNumber = 0, pageSize = 100, searchKeyword = '' }) => {
+  async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
     return {
       content: [
         {
@@ -103,11 +103,11 @@ server.tool(
   'push-message-list',
   'Fetches a paginated list of push messages with search functionality.',
   {
-    pageNumber: z.number(),
-    pageSize: z.number(),
+    pageNumber: z.number().default(1),
+    pageSize: z.number().default(100),
     searchKeyword: z.string().optional(),
   },
-  async ({ pageNumber = 0, pageSize = 100, searchKeyword = '' }) => {
+  async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
     return {
       content: [
         {
