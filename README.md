@@ -12,27 +12,79 @@ A Model Context Protocol server for Hackle API providing tools and resources for
 
 ### Tools
 
-- experiment-list: Fetches a paginated list of all A/B Test experiments from your Hackle workspace with optional search filtering
-- experiment-detail: Retrieves detailed information and results for a specific experiment (A/B Test)
-- active-user-series: Retrieves active user count data over time
-- retention-series: Retrieves user retention data aggregated by time units (day, week, month)
-- stickiness-series: Retrieves user stickiness metrics (frequency of return visits) by time units
-- in-app-message-list: Fetches a paginated list of in-app-messages with optional search filtering
-- in-app-message-detail: Retrieves detailed information and results for a specific in-app-message
-- push-message-list: Fetches a paginated list of all push messages with optional search filtering
-- push-message-detail: Retrieves detailed information and results for a specific push message
+#### Experiment List Tool
+
+- **Name**: `experiment-list`
+- **Description**: Fetches a paginated list of A/B test experiments with search functionality.
+- **Parameters**:
+  - `pageNumber`: Page number (default: 0)
+  - `pageSize`: Number of items per page (default: 100)
+  - `searchKeyword`: Search keyword (optional)
+
+#### Experiment Detail Tool
+
+- **Name**: `experiment-detail`
+- **Description**: Retrieves detailed information for a specific A/B test experiment.
+- **Parameters**:
+  - `experimentId`: Experiment ID
+
+#### In-App Message List Tool
+
+- **Name**: `in-app-message-list`
+- **Description**: Fetches a paginated list of in-app messages with search functionality.
+- **Parameters**:
+  - `pageNumber`: Page number (default: 0)
+  - `pageSize`: Number of items per page (default: 100)
+  - `searchKeyword`: Search keyword (optional)
+
+#### In-App Message Detail Tool
+
+- **Name**: `in-app-message-detail`
+- **Description**: Retrieves detailed information for a specific in-app message.
+- **Parameters**:
+  - `inAppMessageId`: In-app message ID
+
+#### Push Message List Tool
+
+- **Name**: `push-message-list`
+- **Description**: Fetches a paginated list of push messages with search functionality.
+- **Parameters**:
+  - `pageNumber`: Page number (default: 0)
+  - `pageSize`: Number of items per page (default: 100)
+  - `searchKeyword`: Search keyword (optional)
+
+#### Push Message Detail Tool
+
+- **Name**: `push-message-detail`
+- **Description**: Retrieves detailed information for a specific push message.
+- **Parameters**:
+  - `pushMessageId`: Push message ID
+
+#### Active User Series Tool
+
+- **Name**: `active-user-series`
+- **Description**: Retrieves time-series data of active users. Available in daily, weekly, and monthly units.
+- **Parameters**:
+  - `unit`: Time unit (DAY, WEEK, MONTH) (default: DAY)
+  - `date`: Date (optional)
+
+#### Retention Series Tool
+
+- **Name**: `retention-series`
+- **Description**: Retrieves time-series data of user retention. Available in daily, weekly, and monthly units.
+- **Parameters**:
+  - `unit`: Time unit (DAY, WEEK, MONTH) (default: DAY)
+  - `date`: Date (optional)
+
+#### Stickiness Series Tool
+
+- **Name**: `stickiness-series`
+- **Description**: Retrieves time-series data of user stickiness (return visit frequency). Available in weekly and monthly units.
+- **Parameters**:
+  - `unit`: Time unit (WEEK, MONTH) (default: WEEK)
+  - `date`: Date (optional)
 
 ## Installation
-
-### Option 1: Installing via Smithery
-
-To install hackle-mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@hackle-io/hackle-mcp):
-
-```bash
-npx -y @smithery/cli install @hackle-io/hackle-mcp --client claude
-```
-
-### Option 2: Add to claude_desktop_config by hand
 
 Add this entry to your claude_desktop_config.json:
 
@@ -45,14 +97,10 @@ Add this entry to your claude_desktop_config.json:
   "mcpServers": {
     "hackle-mcp": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "@hackle-io/hackle-mcp",
-        "--config",
-        "{\"apiKey\":\"YOUR_API_KEY\"}"
-      ]
+      "args": ["-y", "@hackle-io/hackle-mcp"],
+      "env": {
+        "API_KEY": "YOUR_API_KEY"
+      }
     }
   }
 }
@@ -69,3 +117,7 @@ To use the Hackle MCP Server, you will need an API key. To obtain your API key:
 3. The Hackle team will provide you with a unique API key
 
 **Important**: Never share your API key or commit it to public repositories. Treat your API key as a sensitive credential.
+
+## License
+
+MIT
