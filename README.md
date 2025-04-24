@@ -97,7 +97,7 @@ Add this entry to your claude_desktop_config.json:
   "mcpServers": {
     "hackle-mcp": {
       "command": "npx",
-      "args": ["-y", "@hackle-io/hackle-mcp"],
+      "args": ["-y", "@hackle-io/hackle-mcp@latest"],
       "env": {
         "API_KEY": "YOUR_API_KEY"
       }
