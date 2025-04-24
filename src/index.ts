@@ -3,15 +3,11 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import WebClient from './WebClient.js';
 
-const packageJson = JSON.parse(readFileSync(join(process.cwd(), 'package.json'), 'utf-8'));
-
 const server = new McpServer({
-  name: packageJson.name,
-  version: packageJson.version,
+  name: '@hackle-io/hackle-mcp',
+  version: '1.0.1',
 });
 
 // Experiment List Tool
