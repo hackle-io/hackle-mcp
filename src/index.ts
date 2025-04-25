@@ -7,7 +7,7 @@ import WebClient from './WebClient.js';
 
 const server = new McpServer({
   name: '@hackle-io/hackle-mcp',
-  version: '1.0.2',
+  version: '1.0.3',
 });
 
 // Experiment List Tool
@@ -150,7 +150,7 @@ server.tool(
     unit: z.enum(['DAY', 'WEEK', 'MONTH']),
     date: z.string().optional(),
   },
-  async ({ unit = 'DAY', date }) => {
+  async ({ unit = 'DAY', date = '' }) => {
     return {
       content: [
         {
@@ -172,7 +172,7 @@ server.tool(
     unit: z.enum(['DAY', 'WEEK', 'MONTH']),
     date: z.string().optional(),
   },
-  async ({ unit = 'DAY', date }) => {
+  async ({ unit = 'DAY', date = '' }) => {
     return {
       content: [
         {
@@ -194,7 +194,7 @@ server.tool(
     unit: z.enum(['WEEK', 'MONTH']),
     date: z.string().optional(),
   },
-  async ({ unit = 'WEEK', date }) => {
+  async ({ unit = 'WEEK', date = '' }) => {
     return {
       content: [
         {
