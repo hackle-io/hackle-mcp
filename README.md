@@ -84,6 +84,36 @@ A Model Context Protocol server for Hackle API providing tools and resources for
   - `unit`: Time unit (WEEK, MONTH) (default: WEEK)
   - `date`: Date (optional)
 
+#### Data Report List Tool
+
+- **Name**: `data-report-list`
+- **Description**: Retrieves all data report metadata.
+
+#### Data Report Detail Tool
+
+- **Name**: `data-report-detail`
+- **Description**: Retrieves single data report's detail. It will provide analytics chart id and type inside data report. It is recommended to use Analytics Chart Detail Tool to get further information of each chart.
+- **Parameters**:
+  - `dataReportId`: Data report's id. This can be found in response of Data Report List Tool.
+
+#### Analytics Chart List Tool
+
+- **Name**: `analytics-chart-list`
+- **Description**: Retrieves data analytics chart's metadata list.
+- **Parameters**:
+  - `pageNumber`: Page number (default: 1) (optional)
+  - `pageSize`: Number of items per page (default: 100) (optional)
+  - `searchKeyword`: Search keyword (optional) (optional)
+  - `chartType`: Chart types that Hackle provides: FUNNEL, DATA_INSIGHT, RETENTION, and USER_PATH. (optional)
+
+#### Analytics Chart Detail Tool
+
+- **Name**: `analytics-chart-detail`
+- **Description**: Retrieves data analytics chart's detail. You can visualize the chart using this tool's result.
+- **Parameters**:
+  - `chartId`: Analytics chart's id. It can be found in the response of Data Report Detail Tool or Analytics Chart List Tool.
+  - `chartType`: Analytics chart's type(FUNNEL, DATA_INSIGHT, RETENTION, USER_PATH). It can be found in the response of Data Report Detail Tool or Analytics Chart List Tool.
+
 ## Installation
 
 Add this entry to your claude_desktop_config.json:

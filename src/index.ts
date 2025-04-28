@@ -208,5 +208,84 @@ server.tool(
   },
 );
 
+// Data report list tool
+server.tool('data-report-list', 'fetch data report list.', {}, async () => {
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(await WebClient.get(`/api/v1/data-reports`)),
+      },
+    ],
+  };
+});
+
+// Data report detail tool
+server.tool(
+  'data-report-detail',
+  'fetch data report detail.',
+  {
+    dataReportId: z.number().positive(),
+  },
+  async ({ dataReportId }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(await WebClient.get(`/api/v1/data-reports/${dataReportId}`)),
+        },
+      ],
+    };
+  },
+);
+
+// chart list tool
+server.tool(
+  'analytics-chart-list',
+  'fetch data analytics chart list.',
+  {
+    pageNumber: z.number().optional().default(1),
+    pageSize: z.number().optional().default(100),
+    searchKeyword: z.string().optional(),
+    chartType: z.enum(['FUNNEL', 'DATA_INSIGHT', 'RETENTION', 'USER_PATH']).optional(),
+  },
+  async ({ pageNumber = 1, pageSize = 100, searchKeyword = '', chartType }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(
+            await WebClient.get(
+              `/api/v1/analytics/charts?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}${chartType ? `chartType=${chartType}` : ''}`,
+            ),
+          ),
+        },
+      ],
+    };
+  },
+);
+
+// Chart detail tool
+server.tool(
+  'analytics-chart-detail',
+  "fetch analytics chart detail. You can visualize the chart using this tool's result.",
+  {
+    chartId: z.number().positive().describe('Chart id'),
+    chartType: z
+      .enum(['FUNNEL', 'DATA_INSIGHT', 'RETENTION', 'USER_PATH'])
+      .describe("Type of the chart. Will throw an error if given chartId's chart type is different from chartType."),
+  },
+  async ({ chartId, chartType }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(await WebClient.get(`/api/v1/analytics/charts/${chartId}?chartType=${chartType}`)),
+        },
+      ],
+    };
+  },
+);
+
 const transport = new StdioServerTransport();
 await server.connect(transport);
