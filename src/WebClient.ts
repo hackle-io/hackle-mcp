@@ -10,6 +10,7 @@ const DEFAULT_HEADERS = {
   accept: 'application/json',
   'Content-Type': 'application/json',
   'X-HACKLE-ADMIN-API-KEY': API_KEY,
+  'X-HACKLE-TIME-ZONE': Intl.DateTimeFormat().resolvedOptions().timeZone,
 };
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';

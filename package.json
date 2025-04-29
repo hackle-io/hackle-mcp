@@ -1,6 +1,6 @@
 {
   "name": "@hackle-io/hackle-mcp",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Model Context Protocol server for Hackle",
   "homepage": "https://www.hackle.io",
   "type": "module",
@@ -23,6 +23,8 @@
     "abtest",
     "feature-flag",
     "remote-config",
+    "in-app-message",
+    "push-message",
     "crm",
     "customer-relationship-management"
   ],

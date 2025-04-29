@@ -15,9 +15,9 @@ server.tool(
   'experiment-list',
   'Fetches a paginated list of A/B test experiments with search functionality.',
   {
-    pageNumber: z.number().default(1),
-    pageSize: z.number().default(100),
-    searchKeyword: z.string().optional(),
+    pageNumber: z.number().optional().default(1),
+    pageSize: z.number().optional().default(100),
+    searchKeyword: z.string().optional().describe('name, description, or experimentKey of an experiment.'),
   },
   async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
     return {
@@ -59,9 +59,9 @@ server.tool(
   'in-app-message-list',
   'Fetches a paginated list of in-app messages with search functionality.',
   {
-    pageNumber: z.number().default(1),
-    pageSize: z.number().default(100),
-    searchKeyword: z.string().optional(),
+    pageNumber: z.number().optional().default(1),
+    pageSize: z.number().optional().default(100),
+    searchKeyword: z.string().optional().describe('name, description, or campaignKey of an in-app message.'),
   },
   async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
     return {
@@ -103,9 +103,9 @@ server.tool(
   'push-message-list',
   'Fetches a paginated list of push messages with search functionality.',
   {
-    pageNumber: z.number().default(1),
-    pageSize: z.number().default(100),
-    searchKeyword: z.string().optional(),
+    pageNumber: z.number().optional().default(1),
+    pageSize: z.number().optional().default(100),
+    searchKeyword: z.string().optional().describe('name, description, or campaignKey of a push message.'),
   },
   async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
     return {
@@ -148,7 +148,7 @@ server.tool(
   'Retrieves time-series data of active users. Available in daily, weekly, and monthly units.',
   {
     unit: z.enum(['DAY', 'WEEK', 'MONTH']),
-    date: z.string().optional(),
+    date: z.string().optional().describe('End date in YYYY-MM-DD format.'),
   },
   async ({ unit = 'DAY', date = '' }) => {
     return {
@@ -170,7 +170,7 @@ server.tool(
   'Retrieves time-series data of user retention. Available in daily, weekly, and monthly units.',
   {
     unit: z.enum(['DAY', 'WEEK', 'MONTH']),
-    date: z.string().optional(),
+    date: z.string().optional().describe('End date in YYYY-MM-DD format.'),
   },
   async ({ unit = 'DAY', date = '' }) => {
     return {
@@ -192,7 +192,7 @@ server.tool(
   'Retrieves time-series data of user stickiness (return visit frequency). Available in weekly and monthly units.',
   {
     unit: z.enum(['WEEK', 'MONTH']),
-    date: z.string().optional(),
+    date: z.string().optional().describe('End date in YYYY-MM-DD format.'),
   },
   async ({ unit = 'WEEK', date = '' }) => {
     return {
@@ -202,6 +202,85 @@ server.tool(
           text: JSON.stringify(
             await WebClient.get(`/api/v1/workspaces/auto-metrics/stickiness-series?unit=${unit}&date=${date}`),
           ),
+        },
+      ],
+    };
+  },
+);
+
+// Data report list tool
+server.tool('data-report-list', 'fetch data report list.', {}, async () => {
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(await WebClient.get(`/api/v1/data-reports`)),
+      },
+    ],
+  };
+});
+
+// Data report detail tool
+server.tool(
+  'data-report-detail',
+  'fetch data report detail.',
+  {
+    dataReportId: z.number().positive(),
+  },
+  async ({ dataReportId }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(await WebClient.get(`/api/v1/data-reports/${dataReportId}`)),
+        },
+      ],
+    };
+  },
+);
+
+// chart list tool
+server.tool(
+  'analytics-chart-list',
+  'fetch data analytics chart list.',
+  {
+    pageNumber: z.number().optional().default(1),
+    pageSize: z.number().optional().default(100),
+    searchKeyword: z.string().optional(),
+    chartType: z.enum(['FUNNEL', 'DATA_INSIGHT', 'RETENTION', 'USER_PATH']).optional(),
+  },
+  async ({ pageNumber = 1, pageSize = 100, searchKeyword = '', chartType }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(
+            await WebClient.get(
+              `/api/v1/analytics/charts?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}${chartType ? `chartType=${chartType}` : ''}`,
+            ),
+          ),
+        },
+      ],
+    };
+  },
+);
+
+// Chart detail tool
+server.tool(
+  'analytics-chart-detail',
+  "fetch analytics chart detail. You can visualize the chart using this tool's result.",
+  {
+    chartId: z.number().positive().describe('Chart id'),
+    chartType: z
+      .enum(['FUNNEL', 'DATA_INSIGHT', 'RETENTION', 'USER_PATH'])
+      .describe("Type of the chart. Will throw an error if given chartId's chart type is different from chartType."),
+  },
+  async ({ chartId, chartType }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(await WebClient.get(`/api/v1/analytics/charts/${chartId}?chartType=${chartType}`)),
         },
       ],
     };
