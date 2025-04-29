@@ -256,7 +256,7 @@ server.tool(
           type: 'text',
           text: JSON.stringify(
             await WebClient.get(
-              `/api/v1/analytics/charts?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}${chartType ? `chartType=${chartType}` : ''}`,
+              `/api/v1/analytics/charts?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}${chartType ? `&chartType=${chartType}` : ''}`,
             ),
           ),
         },
