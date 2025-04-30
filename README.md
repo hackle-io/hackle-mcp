@@ -114,6 +114,23 @@ A Model Context Protocol server for Hackle API providing tools and resources for
   - `chartId`: Analytics chart's id. It can be found in the response of Data Report Detail Tool or Analytics Chart List Tool.
   - `chartType`: Analytics chart's type(FUNNEL, DATA_INSIGHT, RETENTION, USER_PATH). It can be found in the response of Data Report Detail Tool or Analytics Chart List Tool.
 
+#### Remote Config List Tool
+
+- **Name**: `remote-config-list`
+- **Description**: Retrieves remote config list.
+- **Parameters**:
+  - `pageNumber`: Page number (default: 1)
+  - `pageSize`: Number of items per page (default: 100)
+  - `searchKeyword`: Search keyword (optional)
+  - `status`: Status of remote config: ACTIVE, ARCHIVED (default: 'ACTIVE')
+
+#### Remote Config Detail Tool
+
+- **Name**: `remote-config-detail`
+- **Description**: Retrieves remote config's detail.
+- **Parameters**:
+  - `remoteConfigId`: Remote config's id. You can get this information by using Remote Config List Tool.
+
 ## Installation
 
 Add this entry to your claude_desktop_config.json:

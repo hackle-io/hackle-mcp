@@ -287,5 +287,53 @@ server.tool(
   },
 );
 
+// Remote Config List Tool
+server.tool(
+  'remote-config-list',
+  'Fetch Remote Config list.',
+  {
+    pageNumber: z.number().optional().default(1),
+    pageSize: z.number().optional().default(100),
+    searchKeyword: z.string().optional(),
+    status: z.enum(['ACTIVE', 'ARCHIVED']).optional().default('ACTIVE'),
+  },
+  async ({ pageNumber = 1, pageSize = 100, searchKeyword = '', status = 'ACTIVE' }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(
+            await WebClient.get(
+              `/api/v1/remote-configs?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}&status=${status}`,
+            ),
+          ),
+        },
+      ],
+    };
+  },
+);
+
+// Remote Config Detail Tool
+server.tool(
+  'remote-config-detail',
+  'Fetch remote config detail.',
+  {
+    remoteConfigId: z
+      .number()
+      .positive()
+      .describe("Remote config's id. You can get this information by using Remote Config List Tool."),
+  },
+  async ({ remoteConfigId }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(await WebClient.get(`/api/v1/remote-configs/${remoteConfigId}`)),
+        },
+      ],
+    };
+  },
+);
+
 const transport = new StdioServerTransport();
 await server.connect(transport);
