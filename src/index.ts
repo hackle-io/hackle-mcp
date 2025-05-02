@@ -3,11 +3,12 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
+import { stringify } from 'qs';
 import WebClient from './WebClient.js';
 
 const server = new McpServer({
   name: '@hackle-io/hackle-mcp',
-  version: '1.0.3',
+  version: '1.2.0',
 });
 
 // Experiment List Tool
@@ -20,15 +21,20 @@ server.tool(
     searchKeyword: z.string().optional().describe('name, description, or experimentKey of an experiment.'),
   },
   async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
+    const qs = stringify(
+      {
+        pageNumber,
+        pageSize,
+        searchKeyword,
+      },
+      { addQueryPrefix: true },
+    );
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(
-            await WebClient.get(
-              `/api/v1/experiments?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}`,
-            ),
-          ),
+          text: JSON.stringify(await WebClient.get(`/api/v1/experiments${qs}`)),
         },
       ],
     };
@@ -64,15 +70,20 @@ server.tool(
     searchKeyword: z.string().optional().describe('name, description, or campaignKey of an in-app message.'),
   },
   async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
+    const qs = stringify(
+      {
+        pageNumber,
+        pageSize,
+        searchKeyword,
+      },
+      { addQueryPrefix: true },
+    );
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(
-            await WebClient.get(
-              `/api/v1/in-app-messages?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}`,
-            ),
-          ),
+          text: JSON.stringify(await WebClient.get(`/api/v1/in-app-messages${qs}`)),
         },
       ],
     };
@@ -108,15 +119,20 @@ server.tool(
     searchKeyword: z.string().optional().describe('name, description, or campaignKey of a push message.'),
   },
   async ({ pageNumber = 1, pageSize = 100, searchKeyword = '' }) => {
+    const qs = stringify(
+      {
+        pageNumber,
+        pageSize,
+        searchKeyword,
+      },
+      { addQueryPrefix: true },
+    );
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(
-            await WebClient.get(
-              `/api/v1/push-messages?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}`,
-            ),
-          ),
+          text: JSON.stringify(await WebClient.get(`/api/v1/push-messages${qs}`)),
         },
       ],
     };
@@ -151,13 +167,13 @@ server.tool(
     date: z.string().optional().describe('End date in YYYY-MM-DD format.'),
   },
   async ({ unit = 'DAY', date = '' }) => {
+    const qs = stringify({ unit, date }, { addQueryPrefix: true });
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(
-            await WebClient.get(`/api/v1/workspaces/auto-metrics/active-user-series?unit=${unit}&date=${date}`),
-          ),
+          text: JSON.stringify(await WebClient.get(`/api/v1/workspaces/auto-metrics/active-user-series${qs}`)),
         },
       ],
     };
@@ -173,13 +189,13 @@ server.tool(
     date: z.string().optional().describe('End date in YYYY-MM-DD format.'),
   },
   async ({ unit = 'DAY', date = '' }) => {
+    const qs = stringify({ unit, date }, { addQueryPrefix: true });
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(
-            await WebClient.get(`/api/v1/workspaces/auto-metrics/retention-series?unit=${unit}&date=${date}`),
-          ),
+          text: JSON.stringify(await WebClient.get(`/api/v1/workspaces/auto-metrics/retention-series${qs}`)),
         },
       ],
     };
@@ -195,13 +211,13 @@ server.tool(
     date: z.string().optional().describe('End date in YYYY-MM-DD format.'),
   },
   async ({ unit = 'WEEK', date = '' }) => {
+    const qs = stringify({ unit, date }, { addQueryPrefix: true });
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(
-            await WebClient.get(`/api/v1/workspaces/auto-metrics/stickiness-series?unit=${unit}&date=${date}`),
-          ),
+          text: JSON.stringify(await WebClient.get(`/api/v1/workspaces/auto-metrics/stickiness-series${qs}`)),
         },
       ],
     };
@@ -250,15 +266,21 @@ server.tool(
     chartType: z.enum(['FUNNEL', 'DATA_INSIGHT', 'RETENTION', 'USER_PATH']).optional(),
   },
   async ({ pageNumber = 1, pageSize = 100, searchKeyword = '', chartType }) => {
+    const qs = stringify(
+      {
+        pageNumber,
+        pageSize,
+        searchKeyword,
+        chartType,
+      },
+      { addQueryPrefix: true },
+    );
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(
-            await WebClient.get(
-              `/api/v1/analytics/charts?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}${chartType ? `&chartType=${chartType}` : ''}`,
-            ),
-          ),
+          text: JSON.stringify(await WebClient.get(`/api/v1/analytics/charts${qs}`)),
         },
       ],
     };
@@ -276,11 +298,67 @@ server.tool(
       .describe("Type of the chart. Will throw an error if given chartId's chart type is different from chartType."),
   },
   async ({ chartId, chartType }) => {
+    const qs = stringify({ chartType }, { addQueryPrefix: true });
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(await WebClient.get(`/api/v1/analytics/charts/${chartId}?chartType=${chartType}`)),
+          text: JSON.stringify(await WebClient.get(`/api/v1/analytics/charts/${chartId}${qs}`)),
+        },
+      ],
+    };
+  },
+);
+
+// Remote Config List Tool
+server.tool(
+  'remote-config-list',
+  'Fetch Remote Config list.',
+  {
+    pageNumber: z.number().optional().default(1),
+    pageSize: z.number().optional().default(100),
+    searchKeyword: z.string().optional(),
+    status: z.enum(['ACTIVE', 'ARCHIVED']).optional().default('ACTIVE'),
+  },
+  async ({ pageNumber = 1, pageSize = 100, searchKeyword = '', status = 'ACTIVE' }) => {
+    const qs = stringify(
+      {
+        pageNumber,
+        pageSize,
+        searchKeyword,
+        status,
+      },
+      { addQueryPrefix: true },
+    );
+
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(await WebClient.get(`/api/v1/remote-configs${qs}`)),
+        },
+      ],
+    };
+  },
+);
+
+// Remote Config Detail Tool
+server.tool(
+  'remote-config-detail',
+  'Fetch remote config detail.',
+  {
+    remoteConfigId: z
+      .number()
+      .positive()
+      .describe("Remote config's id. You can get this information by using Remote Config List Tool."),
+  },
+  async ({ remoteConfigId }) => {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(await WebClient.get(`/api/v1/remote-configs/${remoteConfigId}`)),
         },
       ],
     };

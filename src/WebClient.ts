@@ -20,6 +20,10 @@ class WebClient {
     const url = new URL(`${BASE_URL}${path}`);
     url.searchParams.set('environmentKey', ENVIRONMENT_KEY);
 
+    if (typeof fetch === 'undefined') {
+      return WebClient.fetchFallback(method, url, options);
+    }
+
     const response = await fetch(url, {
       method,
       ...options,
@@ -27,6 +31,32 @@ class WebClient {
         ...DEFAULT_HEADERS,
         ...options.headers,
       },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Hackle API error! status: ${response.status} - ${errorText}`);
+    }
+
+    return (await response.json()) as T;
+  }
+
+  private static async fetchFallback<T>(method: HttpMethod, url: URL, options: RequestInit): Promise<T> {
+    const { default: nodeFetch } = await import('node-fetch');
+    const { body, ...otherOptions } = options;
+
+    if (body !== null && body !== undefined && typeof body !== 'string') {
+      throw new Error(`[ERROR] Invalid body type: ${body}`);
+    }
+
+    const response = await nodeFetch(url, {
+      method,
+      headers: {
+        ...DEFAULT_HEADERS,
+        ...options.headers,
+      },
+      body: body,
+      ...otherOptions,
     });
 
     if (!response.ok) {
