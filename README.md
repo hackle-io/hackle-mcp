@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/hackle-io-hackle-mcp-badge.png)](https://mseep.ai/app/hackle-io-hackle-mcp)
+
 # Hackle MCP Server
 
 [![smithery badge](https://smithery.ai/badge/@hackle-io/hackle-mcp)](https://smithery.ai/server/@hackle-io/hackle-mcp)
