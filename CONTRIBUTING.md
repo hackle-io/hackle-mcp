@@ -64,8 +64,9 @@ A GitHub Action (`pr-title.yml`) validates the PR title on every pull request.
    `.release-please-manifest.json`.
 3. Merging the Release PR triggers:
    - A git tag `vX.Y.Z` and a GitHub Release with the generated notes.
-   - `npm publish` to the `@hackle-io/hackle-mcp` package (requires the
-     `NPM_TOKEN` repository secret).
+   - `npm publish` to the `@hackle-io/hackle-mcp` package, with provenance,
+     authenticated via npm Trusted Publisher (OIDC). No long-lived token is
+     stored in GitHub.
 
 Manual version bump commits to `package.json` are no longer needed.
 
@@ -77,7 +78,22 @@ npm run build
 npm run format
 ```
 
-## Required repository secrets
+## npm Trusted Publisher setup (one-time)
 
-- `NPM_TOKEN`: automation token for publishing to npm. Required only for the
-  publish step.
+Publishing uses [npm Trusted Publishers](https://docs.npmjs.com/trusted-publishers),
+which authenticates GitHub Actions to npm via OIDC instead of a stored token.
+This must be configured **once** on the npm side:
+
+1. Sign in to npmjs.com with an account that has publish access to
+   `@hackle-io/hackle-mcp`.
+2. Go to the package page → **Settings** → **Publishing access**.
+3. Under **Trusted publishers**, click **Add trusted publisher** and configure:
+   - **Publisher**: GitHub Actions
+   - **Organization or user**: `hackle-io`
+   - **Repository**: `hackle-mcp`
+   - **Workflow filename**: `release-please.yml`
+   - **Environment**: leave empty
+4. Save.
+
+After this, no GitHub secret is required for npm publishing. The CI's
+`permissions: id-token: write` is what proves identity to npm.

@@ -27,6 +27,9 @@ jobs:
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -35,8 +38,8 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+      - name: Install npm 11.5.1+
+        run: npm install -g npm@11.5.1
       - run: npm ci
       - run: npm run build
       - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
