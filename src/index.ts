@@ -8,7 +8,7 @@ import WebClient from './WebClient.js';
 
 const server = new McpServer({
   name: '@hackle-io/hackle-mcp',
-  version: '1.3.0',
+  version: '1.3.1',
 });
 
 // Experiment List Tool
