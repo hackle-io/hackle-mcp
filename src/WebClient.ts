@@ -2,6 +2,14 @@ const BASE_URL = 'https://admin-api.hackle.io';
 const ENVIRONMENT_KEY = process.env.ENVIRONMENT_KEY || 'PRODUCTION';
 const API_KEY = process.env.API_KEY || '';
 
+// We recommend using the remote MCP server (https://mcp.hackle.io/mcp) over this
+// local client. New tools are available there and it updates automatically.
+// Migration guide: https://docs.hackle.io/external-link/model-context-protocol/migration
+console.warn(
+  'The Hackle remote MCP server is recommended over this local server. ' +
+    'See https://docs.hackle.io/external-link/model-context-protocol/migration',
+);
+
 if (!API_KEY) {
   console.warn('API_KEY environment variable is not set');
 }
@@ -11,6 +19,7 @@ const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
   'X-HACKLE-ADMIN-API-KEY': API_KEY,
   'X-HACKLE-TIME-ZONE': Intl.DateTimeFormat().resolvedOptions().timeZone,
+  'X-Hackle-Client': 'hackle-local-mcp',
 };
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';

@@ -2,6 +2,26 @@
 
 [![smithery badge](https://smithery.ai/badge/@hackle-io/hackle-mcp)](https://smithery.ai/server/@hackle-io/hackle-mcp)
 
+> [!IMPORTANT]
+> ## 🚀 We recommend using the remote MCP server
+>
+> The Hackle MCP server is now available as a **remote server**. We recommend it over this local npm package — it requires no npm or Node.js setup, updates automatically, and works in the browser. New tools (such as messaging statistics and Kakao/Text message queries) are available on the remote server.
+>
+> This local server will continue to be supported for the time being, but new development is focused on the remote server.
+>
+> 👉 **Migration guide: https://docs.hackle.io/external-link/model-context-protocol/migration**
+>
+> ### How to connect to the remote server
+>
+> 1. **Add a custom connector** in claude.ai (web) or Claude Desktop via **Customization → Connectors → + Add Custom Connector**, using the remote MCP server URL:
+>
+>    ```
+>    https://mcp.hackle.io/mcp
+>    ```
+>
+> 2. Enter your **existing Hackle API key** in the authentication screen — your API key remains unchanged.
+> 3. Once connected, you can optionally remove the local server entry from your `claude_desktop_config.json`.
+
 A Model Context Protocol server for Hackle API providing tools and resources for querying A/B Test data.
 
 <a href="https://glama.ai/mcp/servers/@hackle-io/hackle-mcp">
