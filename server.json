@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.hackle-io/hackle-mcp",
   "title": "Hackle",
-  "description": "Remote MCP server exposing the Hackle Admin API as tools (experiments, feature flags, remote config, in-app/push/text messages, analytics, CRM).",
+  "description": "Remote MCP server for the Hackle Admin API: experiments, feature flags, remote config, messaging.",
   "version": "1.0.0",
   "repository": {
     "url": "https://github.com/hackle-io/hackle-mcp",
