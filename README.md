@@ -2,12 +2,12 @@
 
 [![smithery badge](https://smithery.ai/badge/@hackle-io/hackle-mcp)](https://smithery.ai/server/@hackle-io/hackle-mcp)
 
-> [!IMPORTANT]
-> ## 🚀 We recommend using the remote MCP server
+> [!WARNING]
+> ## ⚠️ This local npm package is deprecated — use the remote MCP server
 >
-> The Hackle MCP server is now available as a **remote server**. We recommend it over this local npm package — it requires no npm or Node.js setup, updates automatically, and works in the browser. New tools (such as messaging statistics and Kakao/Text message queries) are available on the remote server.
+> The Hackle MCP server is now available as a **remote server**, and this local npm package is **deprecated**. The remote server requires no npm or Node.js setup, updates automatically, works in the browser, and is where all new tools (such as messaging statistics and Kakao/Text message queries) ship.
 >
-> This local server will continue to be supported for the time being, but new development is focused on the remote server.
+> **This package will no longer receive updates or new tools.** Existing installations keep working for now, but please migrate to the remote server.
 >
 > 👉 **Migration guide: https://docs.hackle.io/external-link/model-context-protocol/migration**
 >
